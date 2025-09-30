@@ -34,10 +34,9 @@ class YandexTrackerClient:
         """
         try:
             issues = self.client.issues.find(
-                filter={'queue': queue},
-                per_page=limit
+                filter={'queue': queue}
             )
-            return list(issues)
+            return list(issues)[:limit]
         except Exception as e:
             print(f"Ошибка при получении задач по очереди {queue}: {e}")
             return []
@@ -52,10 +51,9 @@ class YandexTrackerClient:
         """
         try:
             issues = self.client.issues.find(
-                filter=filter_dict,
-                per_page=limit
+                filter=filter_dict
             )
-            return list(issues)
+            return list(issues)[:limit]
         except Exception as e:
             print(f"Ошибка при получении задач по фильтру {filter_dict}: {e}")
             return []

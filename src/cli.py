@@ -16,16 +16,16 @@ def format_issues_table(issues):
     if not issues:
         return f"{Fore.YELLOW}Задачи не найдены.{Style.RESET_ALL}"
 
-    headers = ['Ключ', 'Название', 'Статус', 'Исполнитель', 'Автор', 'Создано']
+    headers = ['Ключ', 'Название', 'Статус', 'Исполнитель', 'Создатель', 'Создано']
     table_data = []
 
     for issue in issues:
         table_data.append([
             issue.key,
             issue.summary[:50] + '...' if len(issue.summary) > 50 else issue.summary,
-            getattr(issue, 'status', {}).get('name', 'Неизвестно'),
-            getattr(issue, 'assignee', {}).get('display', 'Не назначен'),
-            getattr(issue, 'author', {}).get('display', 'Неизвестен'),
+            getattr(issue.status, 'name', 'Неизвестно') if issue.status else 'Неизвестно',
+            getattr(issue.assignee, 'display', 'Не назначен') if issue.assignee else 'Не назначен',
+            getattr(issue.createdBy, 'display', 'Неизвестен') if issue.createdBy else 'Неизвестен',
             getattr(issue, 'createdAt', 'Неизвестно')[:10]  # Только дата
         ])
 
